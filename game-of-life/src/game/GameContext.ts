@@ -27,8 +27,8 @@ export const GameDispatchContext = createContext(null);
 export function gameReducer(game: GameState, action: GameAction): GameState {
     switch (action.type) {
         case "init":
-            const width = action.width || 0;
-            const height = action.height || 0;
+            const width = action.width || game.width;
+            const height = action.height || game.height;
             let cells = [];
             for (let i = 0; i < height; i++) {
                 let row = [];
@@ -67,7 +67,7 @@ export function gameReducer(game: GameState, action: GameAction): GameState {
 }
 
 export function useGame() {
-    return useContext(GameContext);
+    return useContext<GameState>(GameContext);
 }
 
 export function useGameDispatch() {
