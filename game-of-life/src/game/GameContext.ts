@@ -19,10 +19,15 @@ export type Position = {
     column: number
 }
 
+type GameDispatchFunction = (action: GameAction) => void;
 
-
-export const GameContext = createContext(null);
-export const GameDispatchContext = createContext(null);
+export const GameContext = createContext<GameState>({
+    cells: [],
+    generation: 0,
+    width: 0,
+    height: 0
+});
+export const GameDispatchContext = createContext<GameDispatchFunction>((_) => {});
 
 export function gameReducer(game: GameState, action: GameAction): GameState {
     switch (action.type) {
@@ -59,15 +64,15 @@ export function gameReducer(game: GameState, action: GameAction): GameState {
             return {
                 ...game,
                 cells: game.cells.map((rowsArr, i) => {
-                    if (i !== action.position.row) return [...rowsArr];
-                    return rowsArr.map((cell, j) => j === action.position.column? !cell : cell);
+                    if (i !== action.position?.row) return [...rowsArr];
+                    return rowsArr.map((cell, j) => j === action.position?.column? !cell : cell);
                 })
             };
     }
 }
 
 export function useGame() {
-    return useContext<GameState>(GameContext);
+    return useContext(GameContext);
 }
 
 export function useGameDispatch() {

@@ -3,8 +3,8 @@ import { GameContext, GameDispatchContext, gameReducer, GameState } from "./Game
 
 export function GameProvider({ children }: { children?: ReactNode }) {
     let cells = [];
-    const width = 10;
-    const height = 10;
+    const width = 16;
+    const height = 16;
     for (let i = 0; i < height; i++) {
         let row = [];
         for (let j = 0; j < width; j++) {
